@@ -549,36 +549,153 @@ html[lang="zh-TW"] .hero-brand-card b{
     font-size:11.5px;
   }
 }
-body {
-  padding-bottom: 110px;
-}
 
-.step-panel,
-.form-panel,
-.survey-card {
-  padding-bottom: 32px;
-}
 
-.sticky-actions,
-.form-actions,
-.bottom-nav {
-  z-index: 50;
-  padding: 14px 18px;
-  gap: 12px;
-  flex-wrap: wrap;
+/* ---------- V3.3 mobile scroll and selection stability ---------- */
+html{
+  min-height:100%;
+  overflow-y:auto;
 }
-
-@media (max-width: 640px) {
-  body {
-    padding-bottom: 150px;
+body{
+  overflow-x:hidden;
+}
+.screen{
+  overflow:visible;
+}
+#intro,
+.hero-visual,
+details.sum{
+  overflow:hidden;
+}
+#form,
+#done,
+.q,
+.step{
+  scroll-margin-top:96px;
+  scroll-margin-bottom:96px;
+}
+button,
+select,
+input,
+textarea,
+.drop{
+  -webkit-tap-highlight-color:rgba(8,115,185,.16);
+}
+.eq-c,
+.seg button,
+.chip,
+.btn{
+  touch-action:manipulation;
+  user-select:none;
+}
+.eq-c,
+.seg button,
+.chip{
+  position:relative;
+}
+.eq-c[aria-pressed=true]::after,
+.seg button[aria-pressed=true]::after,
+.chip[aria-pressed=true]::after{
+  content:"";
+  position:absolute;
+  right:10px;
+  top:10px;
+  width:7px;
+  height:12px;
+  border:solid currentColor;
+  border-width:0 2px 2px 0;
+  transform:rotate(45deg);
+  opacity:.9;
+}
+.chip[aria-pressed=true]{
+  padding-right:34px;
+}
+.nav{
+  bottom:0;
+  padding-bottom:calc(17px + env(safe-area-inset-bottom,0px));
+}
+main{
+  padding-bottom:calc(54px + env(safe-area-inset-bottom,0px));
+}
+@media(max-width:650px){
+  .screen{
+    border-radius:14px;
   }
-
-  .sticky-actions,
-  .form-actions,
-  .bottom-nav {
-    padding: 12px;
+  .dots{
+    margin-bottom:22px;
+  }
+  .step-h{
+    align-items:flex-start;
+  }
+  .eq{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .eq-c:hover,
+  .seg button:hover,
+  .chip:hover,
+  .btn:hover{
+    transform:none;
+  }
+  .seg{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(132px,1fr));
+  }
+  .seg button{
+    width:100%;
+    min-width:0;
+  }
+  .chips{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+  .chip{
+    justify-content:flex-start;
+    width:100%;
+    min-width:0;
+    border-radius:12px;
+  }
+  .nav{
+    position:static;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    gap:10px;
+    margin:24px 0 0;
+    padding:16px 0 0;
+    background:transparent;
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+  }
+  .nav .sp{
+    display:none;
+  }
+  #backBtn{
+    justify-self:start;
+  }
+  #copyBtn{
+    justify-self:center;
+  }
+  #nextBtn{
+    justify-self:end;
   }
 }
+@media(max-width:390px){
+  .eq{
+    grid-template-columns:1fr;
+  }
+  .btn{
+    padding-left:15px;
+    padding-right:15px;
+  }
+  .nav{
+    grid-template-columns:1fr 1fr;
+  }
+  #copyBtn{
+    grid-column:1 / -1;
+    justify-self:stretch;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2262,7 +2379,8 @@ function init(){
       steps.querySelectorAll("[data-eq]").forEach(b =>
         b.setAttribute("aria-pressed", b === eq ? "true" : "false"));
       setErr("equipmentType","");
-      render(); go(si, true); save();
+      render();
+      save();
       return;
     }
     const pick = e.target.closest("[data-pick]");
