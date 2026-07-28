@@ -549,7 +549,36 @@ html[lang="zh-TW"] .hero-brand-card b{
     font-size:11.5px;
   }
 }
+body {
+  padding-bottom: 110px;
+}
 
+.step-panel,
+.form-panel,
+.survey-card {
+  padding-bottom: 32px;
+}
+
+.sticky-actions,
+.form-actions,
+.bottom-nav {
+  z-index: 50;
+  padding: 14px 18px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding-bottom: 150px;
+  }
+
+  .sticky-actions,
+  .form-actions,
+  .bottom-nav {
+    padding: 12px;
+  }
+}
 </style>
 </head>
 <body>
